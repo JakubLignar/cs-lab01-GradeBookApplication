@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
 {
-    public class BaseGradeBook
+    public abstract class BaseGradeBook
     {
         public string Name { get; set; }
         public List<Student> Students { get; set; }
@@ -27,7 +27,7 @@ namespace GradeBook.GradeBooks
                 throw new ArgumentException("A Name is required to add a student to a gradebook.");
             Students.Add(student);
         }
-
+        
         public void RemoveStudent(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -74,6 +74,7 @@ namespace GradeBook.GradeBooks
                 Console.WriteLine("{0} : {1} : {2}", student.Name, student.Type, student.Enrollment);
             }
         }
+
 
         public static BaseGradeBook Load(string name)
         {
@@ -267,6 +268,10 @@ namespace GradeBook.GradeBooks
             
             return JsonConvert.DeserializeObject(json, gradebook);
         }
+       
+
 
     }
+
+
 }
