@@ -118,20 +118,26 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
+            int gpa = 0;
+            if ((studentType == StudentType.Honors || studentType == StudentType.DualEnrolled) && IsWeighted)
+            {
+                gpa++;
+            }
             switch (letterGrade)
             {
                 case 'A':
-                    return 4;
+                    return 4 + gpa;
                 case 'B':
-                    return 3;
+                    return 3 + gpa;
                 case 'C':
-                    return 2;
+                    return 2 + gpa;
                 case 'D':
-                    return 1;
+                    return 1 + gpa;
                 case 'F':
-                    return 0;
+                    return 0 + gpa;
             }
-            return 0;
+            return gpa;
+
         }
 
         public virtual void CalculateStatistics()
@@ -230,6 +236,7 @@ namespace GradeBook.GradeBooks
                 return 'F';
         }
 
+
         /// <summary>
         ///     Converts json to the appropriate gradebook type.
         ///     Note: This method contains code that is not recommended practice.
@@ -278,6 +285,7 @@ namespace GradeBook.GradeBooks
             
             return JsonConvert.DeserializeObject(json, gradebook);
         }
+
 
 
     }
